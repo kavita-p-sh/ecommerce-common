@@ -56,6 +56,26 @@ ecommerce-common
 bash
 mvn clean install
 
+## Build Order
+
+All services depend on ecommerce-common.
+
+Before building user-service, product-service, or order-service, install the common module first:
+
+cd ecommerce-common
+mvn clean install
+
+After this, build the required service:
+
+cd user-service
+mvn clean install
+
+cd product-service
+mvn clean install
+
+cd order-service
+mvn clean install
+
 ## Purpose
 
 This module is used as a shared dependency for:
