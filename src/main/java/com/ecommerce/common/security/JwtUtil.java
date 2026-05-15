@@ -5,6 +5,7 @@ import com.ecommerce.common.util.AppConstants;
 import com.ecommerce.common.util.JwtConstant;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -20,11 +21,12 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
-    private final SecretKey secretKey;
+    private final SecretKey userSecretKey;
     private final long expiration;
 
-    public JwtUtil(SecretKey secretKey, @Value("${jwt.expiration}") long expiration) {
-        this.secretKey = secretKey;
+    public JwtUtil(@Qualifier("userSecretKey") SecretKey userSecretKey,
+                   @Value("${jwt.expiration}") long expiration) {
+        this.userSecretKey = userSecretKey;
         this.expiration = expiration;
     }
 
@@ -46,7 +48,7 @@ public class JwtUtil {
                 .claim("role", role)
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + expiration))
-                .encryptWith(secretKey, Jwts.KEY.DIRECT, Jwts.ENC.A256GCM)
+                .encryptWith(userSecretKey, Jwts.KEY.DIRECT, Jwts.ENC.A256GCM)
                 .compact();
     }
 
@@ -95,7 +97,7 @@ public class JwtUtil {
      */
     private Claims extractClaims(String token) {
         return Jwts.parser()
-                .decryptWith(secretKey)
+                .decryptWith(userSecretKey)
                 .build()
                 .parseEncryptedClaims(getToken(token))
                 .getPayload();
