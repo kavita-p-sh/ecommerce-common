@@ -9,7 +9,7 @@ import lombok.EqualsAndHashCode;
 @Table(name = "tb_stock_reduce")
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class StockReduceEntity {
+public class StockReduceEntity extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

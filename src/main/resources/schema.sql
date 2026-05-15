@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS tb_orders (
        order_item_id BIGINT AUTO_INCREMENT PRIMARY KEY,
        order_id CHAR(36) NOT NULL ,
        product_id BIGINT NOT NULL,
-       quantity INT NOT NULL,
+       ordered_quantity INT NOT NULL,
 
        CONSTRAINT fk_tb_order_items_orders
          FOREIGN KEY (order_id) REFERENCES tb_orders(order_id),
@@ -73,7 +73,7 @@ CREATE TABLE IF NOT EXISTS tb_orders (
           FOREIGN KEY (product_id) REFERENCES tb_products(product_id)
   );
 
- CREATE TABLE IF NOT EXISTS CREATE TABLE tb_stock_reduce (
+ CREATE TABLE IF NOT EXISTS tb_stock_reduce (
       stock_id BIGINT AUTO_INCREMENT PRIMARY KEY,
       order_id CHAR(36) NOT NULL,
       product_id BIGINT NOT NULL,
@@ -97,3 +97,8 @@ CREATE INDEX idx_tb_orders_status ON tb_orders(status_id);
 CREATE INDEX idx_tb_orders_created_by ON tb_orders(created_by);
 CREATE INDEX idx_tb_products_price ON tb_products(price);
 CREATE INDEX idx_tb_products_quantity ON tb_products(quantity);
+CREATE INDEX idx_tb_order_items_order ON tb_order_items(order_id);
+CREATE INDEX idx_tb_order_items_product ON tb_order_items(product_id);
+CREATE INDEX idx_tb_stock_reduce_order ON tb_stock_reduce(order_id);
+CREATE INDEX idx_tb_stock_reduce_product ON tb_stock_reduce(product_id);
+CREATE INDEX idx_tb_stock_reduce_status ON tb_stock_reduce(status);
