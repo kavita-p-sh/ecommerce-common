@@ -248,7 +248,9 @@ INSERT INTO tb_order_status (status_id, status_name)
 VALUES
     (1, 'PLACED'),
     (2, 'CANCELLED'),
-    (3, 'DELIVERED')
+    (3, 'DELIVERED'),
+    (4,'PENDING'),
+    (5,'FAILED')
 ON DUPLICATE KEY UPDATE
     status_name = VALUES(status_name);
 
