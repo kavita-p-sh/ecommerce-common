@@ -83,6 +83,7 @@ public class AppConstants {
     public static final String USER_SERVICE_CONNECTION_FAILED = "Unable to connect to user service";
 
 
+    public static final String INVALID_TOKEN = "Token is invalid";
 
     public static final String ANONYMOUS_USER = "anonymousUser";
 }
