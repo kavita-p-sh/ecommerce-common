@@ -79,6 +79,9 @@ public class AppConstants {
     public static final String PRODUCT_STOCK_REDUCE_FAILED = "Something went wrong while reducing product stock";
     public static final String REQUEST_CONTEXT_NOT_FOUND = "Request context not found";
     public static final String AUTHORIZATION_TOKEN_MISSING = "Authorization token is missing";
+    public static final String USER_SERVICE_NOT_AVAILABLE = "User service is currently unavailable";
+    public static final String USER_SERVICE_CONNECTION_FAILED = "Unable to connect to user service";
+
 
 
     public static final String ANONYMOUS_USER = "anonymousUser";
