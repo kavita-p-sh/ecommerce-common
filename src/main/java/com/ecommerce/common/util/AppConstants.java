@@ -80,6 +80,7 @@ public class AppConstants {
     public static final String REQUEST_CONTEXT_NOT_FOUND = "Request context not found";
     public static final String AUTHORIZATION_TOKEN_MISSING = "Authorization token is missing";
 
+    public static final String INVALID_TOKEN = "Token is invalid";
 
     public static final String ANONYMOUS_USER = "anonymousUser";
 }

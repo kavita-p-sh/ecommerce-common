@@ -2,6 +2,7 @@ package com.ecommerce.common.security;
 
 
 import com.ecommerce.common.exception.UnauthorizedException;
+import com.ecommerce.common.util.AppConstants;
 import com.ecommerce.common.util.JwtConstant;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -9,6 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -82,10 +84,23 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 }
             }
 
-        } catch (Exception e) {
-            log.error("JWT validation failed for request to {}", request.getServletPath(), e);
-            throw new UnauthorizedException(JwtConstant.INVALID_TOKEN_MESSAGE);
+        } catch (Exception ex) {
+            log.error("JWT authentication failed: {}", ex.getMessage());
 
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+
+            String errorResponse = """
+            {
+              "status": 401,
+              "error": "Unauthorized",
+              "message": "%s",
+              "path": "%s"
+            }
+            """.formatted(AppConstants.INVALID_TOKEN, request.getRequestURI());
+
+            response.getWriter().write(errorResponse);
+            return;
         }
 
         filterChain.doFilter(request, response);
